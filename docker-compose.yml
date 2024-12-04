@@ -1,0 +1,45 @@
+version: '2'
+services:
+  mysql_test:
+    image: 'mysql:latest'
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: lapass
+      MYSQL_DATABASE: testdb
+    ports:
+      - '4041:3306'
+    volumes:
+      - './volumes/mysql:/var/lib/mysql'
+  mongodb_test:
+    image: 'mongo:latest'
+    container_name: mongo_container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: lapass
+    ports:
+      - '27117:27017'
+    volumes:
+      - './volumes/mongo:/data/db'
+  client:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.client
+    container_name: client_container
+    depends_on:
+      - mysql_test
+      - mongodb_test
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: lapass
+      MYSQL_SERVER: mysql_test
+      MYSQL_PORT: 3306
+      MONGO_SERVER: mongodb_test
+      MONGO_USER: root
+      MONGO_PASSWORD: lapass
+      MONGO_PORT: 27017
+    volumes:
+      - './scripts:/scripts'
+      - './datos:/datos'
+      - './salidas:/salidas'
+    command: bash -c "while true; do sleep 1000; done"
+    #command: bash /scripts/run.sh > resultados_`date '+%Y-%m-%d_%H-%M-%S'`
