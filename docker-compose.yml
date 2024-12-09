@@ -5,7 +5,7 @@ services:
     container_name: mysql_container
     environment:
       MYSQL_ROOT_PASSWORD: lapass
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: pruebas
     ports:
       - '4041:3306'
     volumes:
@@ -33,13 +33,14 @@ services:
       MYSQL_PASSWORD: lapass
       MYSQL_SERVER: mysql_test
       MYSQL_PORT: 3306
+      MYSQL_DB: pruebas
       MONGO_SERVER: mongodb_test
       MONGO_USER: root
       MONGO_PASSWORD: lapass
       MONGO_PORT: 27017
+      MONGO_DB: pruebas
     volumes:
       - './scripts:/scripts'
       - './datos:/datos'
       - './salidas:/salidas'
     command: bash -c "while true; do sleep 1000; done"
-    #command: bash /scripts/run.sh > resultados_`date '+%Y-%m-%d_%H-%M-%S'`
