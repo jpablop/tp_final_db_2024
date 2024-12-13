@@ -7,24 +7,22 @@ BASE_NAME="para_tp_final_caso_"
 casos=(1 2 3)
 
 ejecutar_consulta(){
-    echo "-- Ejecutando *Consulta #$1) - *$2* - Para el Caso *$3*"
+    nombre_archivo=$(basename "$2")
+    echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$1*"
     start_time=$(date +%s%N)
-    $COMANDO  $BASE_NAME$3 --file=$4
+    $COMANDO  $BASE_NAME$3 --file=$2
     end_time=$(date +%s%N)
     elapsed=$((end_time - start_time))
-    echo "Tiempo de *$2*  para  el caso *$3* fue: $((elapsed / 1000000)) ms"
+    echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
     echo " "
 }
 
 for i in "${casos[@]}"
 do
-    ejecutar_consulta 1 "Select sin join sin group" ${i}    /scripts/mongo/consulta_1.js
-    #ejecutar_consulta 2 "Select sin join con group" ${i}    /scripts/mongo/consulta_2.js
-    #ejecutar_consulta 3 "Select con 1 join sin group " ${i} /scripts/mongo/consulta_3.js
-    #ejecutar_consulta 4 "Select con 1 join con group " ${i} /scripts/mongo/consulta_4.js
-    #ejecutar_consulta 5 "Select con 2 join sin group " ${i} /scripts/mongo/consulta_5.js
-    #ejecutar_consulta 6 "Select con 2 join con group " ${i} /scripts/mongo/consulta_6.js
-
+    for archivo in /scripts/mongo/*.js
+    do
+        ejecutar_consulta ${i} "$archivo"
+    done
 done 
 
 
