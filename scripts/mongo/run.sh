@@ -13,7 +13,7 @@ ejecutar_consulta(){
         nombre_archivo=$(basename "$1")
         echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$i*"
         start_time=$(date +%s%N)
-        $COMANDO  $BASE_NAME$3 --file=$1
+        $COMANDO  $BASE_NAME$i --file $1
         end_time=$(date +%s%N)
         elapsed=$((end_time - start_time))
         echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"

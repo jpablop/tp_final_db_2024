@@ -10,7 +10,7 @@ do
     echo "---- Reiniciando la  base de datos mysql para caso *${i}*"
     echo "-- Descomprimiendo dump sql"
     gunzip --keep /datos/mysql/caso_$i.sql.gz
-    echo "-- Se elimina la base $BASE_NAME$i si existe previamiente"
+    echo "-- Se elimina la base $BASE_NAME$i si existe previamente"
     echo "DROP DATABASE IF EXISTS $BASE_NAME$i" | $COMANDO
     echo "-- Se crea la base $BASE_NAME$i"
     echo "CREATE DATABASE $BASE_NAME$i" | $COMANDO
