@@ -7,26 +7,25 @@ BASE_NAME="para_tp_final_caso_"
 casos=(1 2 3)
 
 ejecutar_consulta(){
-    nombre_archivo=$(basename "$2")
-    echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$1*"
-    start_time=$(date +%s%N)
-    $COMANDO  $BASE_NAME$3 --file=$2
-    end_time=$(date +%s%N)
-    elapsed=$((end_time - start_time))
-    echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
-    echo " "
+
+    for i in "${casos[@]}"
+    do
+        nombre_archivo=$(basename "$1")
+        echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$i*"
+        start_time=$(date +%s%N)
+        $COMANDO  $BASE_NAME$3 --file=$1
+        end_time=$(date +%s%N)
+        elapsed=$((end_time - start_time))
+        echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
+        echo " "
+    done
 }
 
-for i in "${casos[@]}"
+for archivo in /scripts/mongo/*.js
 do
-    for archivo in /scripts/mongo/*.js
-    do
-        ejecutar_consulta ${i} "$archivo"
-    done
-done 
-
-
-
+        ejecutar_consulta "$archivo"
+done
+ 
 
 #mongo testdb --eval 'db.collection.find({ campo: "valor" }).explain("executionStats")'
 #mongostat --host localhost --port 27017 --rowcount 1

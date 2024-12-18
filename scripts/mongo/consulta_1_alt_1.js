@@ -8,4 +8,4 @@ db.personasLiquidaciones.aggregate(
     },
     { $project: { documento: 1 } }
   ]
-);
+)

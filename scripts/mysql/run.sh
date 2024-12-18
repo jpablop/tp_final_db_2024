@@ -6,29 +6,23 @@ BASE_NAME="para_tp_final_caso_"
 
 casos=(1 2 3)
 
-ejecutar_consulta()
-{
-    nombre_archivo=$(basename "$2")
-    echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$1*"
-    start_time=$(date +%s%N)
-    cat $2 | $COMANDO $BASE_NAME$1 > /dev/null    
-    end_time=$(date +%s%N)
-    #echo "SHOW STATUS LIKE 'Handler_read%';" | $COMANDO
-    elapsed=$((end_time - start_time))
-    echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
-    echo " "
+ejecutar_consulta(){
+    for i in "${casos[@]}"
+    do
+        nombre_archivo=$(basename "$1")
+        echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$i*"
+        start_time=$(date +%s%N)
+        cat $1 | $COMANDO $BASE_NAME$i > /dev/null    
+        end_time=$(date +%s%N)
+        elapsed=$((end_time - start_time))
+        echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
+        echo " "
+    done
 }
 
-for i in "${casos[@]}"
+
+for archivo in /scripts/mysql/*.sql
 do
-    for archivo in /scripts/mysql/*.sql
-    do
-        ejecutar_consulta ${i} "$archivo"
-    done
-done 
-
-
-
-
-
+    ejecutar_consulta $archivo
+done
 
