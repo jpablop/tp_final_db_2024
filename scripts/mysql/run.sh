@@ -15,7 +15,7 @@ ejecutar_consulta(){
         cat $1 | $COMANDO $BASE_NAME$i > /dev/null    
         end_time=$(date +%s%N)
         elapsed=$((end_time - start_time))
-        echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
+        echo "Tiempo de ejecución: $((elapsed / 1000000)) ms"
         echo " "
     done
 }

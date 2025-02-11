@@ -12,11 +12,12 @@ ejecutar_consulta(){
     do
         nombre_archivo=$(basename "$1")
         echo "-- Ejecutando *$nombre_archivo* - Para el Caso *$i*"
+        $COMANDO  $BASE_NAME$i --file /scripts/clean_plan_cache.js
         start_time=$(date +%s%N)
         $COMANDO  $BASE_NAME$i --file $1
         end_time=$(date +%s%N)
         elapsed=$((end_time - start_time))
-        echo "Tiempo de ejecucion: $((elapsed / 1000000)) ms"
+        echo "Tiempo de ejecución: $((elapsed / 1000000)) ms"
         echo " "
     done
 }
